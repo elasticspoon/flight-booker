@@ -1,0 +1,4 @@
+web: bundle exec rdbg -n --open=vscode -c -- bin/rails server -p 3000
+js: yarn build --watch
+css: yarn build:css --watch
+guard: bundle exec guard -i
