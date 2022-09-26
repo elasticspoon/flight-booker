@@ -8,12 +8,12 @@ RSpec.describe Airport, type: :model do
     it do
       should have_many(:departing_flights)
         .class_name('Flight').with_foreign_key('departure_airport_id')
-        .inverse_of(:departure_airport).dependent(false)
+        .inverse_of(:departure_airport).dependent(:destroy)
     end
     it do
       should have_many(:arriving_flights)
         .class_name('Flight').with_foreign_key('arrival_airport_id')
-        .inverse_of(:arrival_airport).dependent(false)
+        .inverse_of(:arrival_airport).dependent(:destroy)
     end
   end
 

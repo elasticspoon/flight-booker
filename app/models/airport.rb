@@ -4,12 +4,12 @@ class Airport < ApplicationRecord
            class_name: 'Flight',
            foreign_key: 'departure_airport_id',
            inverse_of:  :departure_airport,
-           dependent: false
+           dependent: :destroy
   has_many :arriving_flights,
            class_name: 'Flight',
            foreign_key: 'arrival_airport_id',
            inverse_of:  :arrival_airport,
-           dependent: false
+           dependent: :destroy
 
   validates :code,
             presence: true,

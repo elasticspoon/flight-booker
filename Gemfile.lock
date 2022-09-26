@@ -375,6 +375,7 @@ DEPENDENCIES
   rails-controller-testing
   reek
   rspec-rails
+  rubocop
   rubocop-rails
   rubocop-rspec
   selenium-webdriver
