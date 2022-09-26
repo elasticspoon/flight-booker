@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :airport do
-    code { "MyString" }
+    location { "#{Faker::Address.city}, #{Faker::Address.country}" }
+    code { Faker::Address.country_code_long }
   end
 end
