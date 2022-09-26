@@ -11,7 +11,11 @@ class Airport < ApplicationRecord
            inverse_of:  :arrival_airport,
            dependent: false
 
-  validates :code, presence: true, uniqueness: true, length: { is: 3 }
+  validates :code,
+            presence: true,
+            uniqueness: true,
+            length: { is: 3 },
+               format: { with: /\A[A-Z]{3}\z/ }
   validates :location, presence: true
 end
 

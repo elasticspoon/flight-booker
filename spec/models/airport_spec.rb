@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 require 'rails_helper'
 
 RSpec.describe Airport, type: :model do
@@ -23,5 +24,14 @@ RSpec.describe Airport, type: :model do
     it { should validate_uniqueness_of(:code) }
     it { should validate_length_of(:code).is_equal_to(3) }
     it { should validate_presence_of(:location) }
+    describe 'code format' do
+      it { should allow_value('ABC').for(:code) }
+      it { should_not allow_value('abc').for(:code) }
+      it { should_not allow_value('A B').for(:code) }
+      it { should_not allow_value('AB1').for(:code) }
+      it { should_not allow_value('$%^').for(:code) }
+    end
   end
 end
+
+# rubocop:enable Metrics/BlockLength
