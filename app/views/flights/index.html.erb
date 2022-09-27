@@ -1,14 +1,17 @@
 <p style="color: green"><%= notice %></p>
 <h1>Flights</h1>
-<%= form_with url: flights_path, scope: :flight, method: :get, data_turbo_method: :get, class: '' do |form| %>
+<%= form_with url: flights_path, method: :get, data_turbo_method: :get, class: '' do |form| %>
   <%= form.collection_select :arrival_airport, @airports, :code, :location, { selected: @current_search[:arrival_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
   <%= form.collection_select :departure_airport, @airports, :code, :location, { selected: @current_search[:departure_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
   <%= form.select :num_passengers, options_for_select((1..4).to_a) %>
-  <%= form.collection_select :departure, @departures, :id, :name, { selected: @current_search[:departure_time], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
-  <%= form.submit 'Search', id: 'flight-submit' %>
+  <%= form.text_field :departure, id: "depart-picker" %>
+  <%# form.date_field :departure %>
+  <%# form.collection_select :departure, @departures, :id, :name, { selected: @current_search[:departure_time], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
+  <%= form.submit 'Search', id: 'flight-submit', readonly: true, placeholder: 'Select Date...' %>
 <% end %>
 <%= turbo_frame_tag 'flights-list' do %>
   <% @flights.each do |flight| %>
     <%= render flight %>
   <% end %>
 <% end %>
+<%= javascript_tag date_injecter(values: @departures, selected: @current_search[:departure_time]) %>

@@ -26,8 +26,7 @@ class Flight < ApplicationRecord
   end
 
   def self.departure_collection(flights)
-    unique_dates = flights.map(&:pretty_departure).uniq
-    unique_dates.map { |date| Struct.new(:id, :name).new(date, date) }
+    flights.map(&:pretty_departure).uniq
   end
 
   def self.departure_range(departure_date)

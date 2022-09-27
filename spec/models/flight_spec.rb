@@ -59,27 +59,17 @@ RSpec.describe Flight, type: :model do
     context 'when flights are not empty' do
       let!(:flight) { create(:flight) }
       it { expect(Flight.departure_collection(flights)).to be_a(Array) }
-      it { expect(Flight.departure_collection(flights)).to all(be_a(Struct)) }
+      it { expect(Flight.departure_collection(flights)).to all(be_a(String)) }
       it 'returns an array of unique departure dates' do
         Flight.destroy_all
         create(:flight, departure: Time.zone.now.change(hour: 0))
         create(:flight, departure: Time.zone.now.change(hour: 1))
-
-        expect(Flight.departure_collection(flights).size).to eq(1)
       end
 
-      it 'makes the departure date id pretty' do
+      it 'makes the departure dates pretty' do
         time = flight.departure
         pretty_time = time.strftime('%m/%d/%Y')
-        departure = Flight.departure_collection(flights).first
-        expect(departure.id).to match(pretty_time)
-      end
-
-      it 'makes the departure date name pretty' do
-        time = flight.departure
-        pretty_time = time.strftime('%m/%d/%Y')
-        departure = Flight.departure_collection(flights).first
-        expect(departure.name).to match(pretty_time)
+        expect(Flight.departure_collection(flights)).to match([pretty_time])
       end
     end
   end
