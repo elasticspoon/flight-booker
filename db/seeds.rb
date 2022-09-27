@@ -8,13 +8,13 @@
 require 'faker'
 
 Airport.delete_all
-30.times do
+8.times do
   Airport.create(
     location: "#{Faker::Address.city}, #{Faker::Address.country}",
     code: Faker::Address.unique.country_code_long
   )
 end
-50.times do
+200.times do
   arrival_airport, departure_airport = Airport.all.sample(2)
   Flight.create(
     arrival_airport:,
