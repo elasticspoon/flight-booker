@@ -4,9 +4,7 @@
   <%= form.collection_select :arrival_airport, @airports, :code, :location, { selected: @current_search[:arrival_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
   <%= form.collection_select :departure_airport, @airports, :code, :location, { selected: @current_search[:departure_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
   <%= form.select :num_passengers, options_for_select((1..4).to_a) %>
-  <%= form.text_field :departure, id: "depart-picker" %>
-  <%# form.date_field :departure %>
-  <%# form.collection_select :departure, @departures, :id, :name, { selected: @current_search[:departure_time], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
+  <%= date_select_fields(form:, array: @departures, field_name: 'departure', current_value: @current_search[:departure_time]) %>
   <%= form.submit 'Search', id: 'flight-submit', readonly: true, placeholder: 'Select Date...' %>
 <% end %>
 <%= turbo_frame_tag 'flights-list' do %>
@@ -14,4 +12,3 @@
     <%= render flight %>
   <% end %>
 <% end %>
-<%= javascript_tag date_injecter(values: @departures, selected: @current_search[:departure_time]) %>

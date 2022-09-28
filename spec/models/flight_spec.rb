@@ -93,7 +93,102 @@ RSpec.describe Flight, type: :model do
 
     it 'parses american dates' do
       date = '12/31/2021'
-      expect { Flight.departure_range(date) }.not_to raise_error Date::Error
+      expect { Flight.departure_range(date) }.not_to raise_error
+    end
+  end
+
+  describe 'self.parse flights' do
+    context 'when flights are empty' do
+      it { expect(Flight.parse_flights([])).to be_a(Hash) }
+      it { expect(Flight.parse_flights([])).to all(be_a(Array)) }
+    end
+    context 'when flights are not empty' do
+      let(:flights) { ['01/01/2021', '01/01/2021', '01/02/2021'] }
+      it { expect(Flight.parse_flights([])).to be_a(Hash) }
+      it { expect(Flight.parse_flights([])).to all(be_a(Array)) }
+      it 'returns a hash with keys month, day, year' do
+        expect(Flight.parse_flights(flights).keys).to match(%i[month day year])
+      end
+      it 'has a the correct value for days' do
+        expect(Flight.parse_flights(flights)[:day]).to match(%w[01 01 02])
+      end
+      it 'has a the correct value for months' do
+        expect(Flight.parse_flights(flights)[:month]).to match(%w[01 01 01])
+      end
+      it 'has a the correct value for years' do
+        expect(Flight.parse_flights(flights)[:year]).to match(%w[2021 2021 2021])
+      end
+    end
+  end
+  describe 'self.parse_date_params' do
+    let(:params) { ActionController::Parameters.new(param_values) }
+    context 'when params are bad' do
+      it 'returns nil if not given params' do
+        expect(Flight.parse_date_params(nil)).to be_nil
+      end
+      context 'when params are empty' do
+        let(:param_values) { {} }
+        it { expect(Flight.parse_date_params(params)).to be_nil }
+      end
+      context 'when no params are given' do
+        let(:param_values) { { month: '', day: '', year: '' } }
+        it { expect(Flight.parse_date_params(params)).to be_nil }
+      end
+      context 'when params are m d' do
+        let(:param_values) { { month: '01', day: '01', year: '' } }
+        it { expect(Flight.parse_date_params(params)).to be_nil }
+      end
+      context 'when params are y d' do
+        let(:param_values) { { month: '', day: '01', year: '2021' } }
+        it { expect(Flight.parse_date_params(params)).to be_nil }
+      end
+      context 'when params are m' do
+        let(:param_values) { { month: '01', day: '', year: '' } }
+        it { expect(Flight.parse_date_params(params)).to be_nil }
+      end
+      context 'when params are d' do
+        let(:param_values) { { month: '', day: '01', year: '' } }
+        it { expect(Flight.parse_date_params(params)).to be_nil }
+      end
+    end
+    context 'when params are good' do
+      let(:param_values) { { month: '01', day: '01', year: '2021' } }
+      it 'returns a range of dates' do
+        expect(Flight.parse_date_params(params)).to be_a(Range)
+      end
+      context 'when params have y m d' do
+        let(:param_values) { { month: '01', day: '01', year: '2021' } }
+        it 'returns a range with start on expected day' do
+          date_range = Flight.parse_date_params(params)
+          expect(date_range.first).to eq(Time.zone.parse('01/01/2021'))
+        end
+        it 'returns a range with end on next day' do
+          date_range = Flight.parse_date_params(params)
+          expect(date_range.last).to eq(Time.zone.parse('02/01/2021'))
+        end
+      end
+      context 'when params have y m' do
+        let(:param_values) { { day: '', month: '01', year: '2021' } }
+        it 'returns a range with start on expected day' do
+          date_range = Flight.parse_date_params(params)
+          expect(date_range.first).to eq(Time.zone.parse('01/01/2021'))
+        end
+        it 'returns a range with end on next month' do
+          date_range = Flight.parse_date_params(params)
+          expect(date_range.last).to eq(Time.zone.parse('01/02/2021'))
+        end
+      end
+      context 'when params have y' do
+        let(:param_values) { { day: '', month: '', year: '2021' } }
+        it 'returns a range with start on expected day' do
+          date_range = Flight.parse_date_params(params)
+          expect(date_range.first).to eq(Time.zone.parse('01/01/2021'))
+        end
+        it 'returns a range with end on next year' do
+          date_range = Flight.parse_date_params(params)
+          expect(date_range.last).to eq(Time.zone.parse('01/01/2022'))
+        end
+      end
     end
   end
 end

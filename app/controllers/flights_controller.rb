@@ -1,39 +1,33 @@
 class FlightsController < ApplicationController
-  before_action :set_flight, only: %i[show edit update destroy]
   before_action :set_current_search, only: %i[index]
 
   # GET /flights or /flights.json
   def index
     @airports = Airport.all
     @flights = execute_search
-    @departures = Flight.departure_collection(@flights)
+    @departures = Flight.date_select_helper(@flights)
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_flight
-    @flight = Flight.find(params[:id])
-  end
-
   # Only allow a list of trusted parameters through.
   def flight_params
-    params.permit(:arrival_airport, :departure_airport, :departure).compact_blank
+    params.permit(:arrival_airport, :departure_airport, departure: %i[day month year]).compact_blank
   end
 
   def set_current_search
     search = flight_params
     departure_time = search[:departure]
-    search[:departure] = Flight.departure_range(departure_time) if departure_time
+    search[:departure] = Flight.parse_date_params(departure_time) if departure_time
     search[:departure_time] = departure_time
     @current_search = search
   end
 
   def execute_search
-    logger.debug "Searching for flights with params: #{@current_search}"
-    search_params = @current_search.except(:departure_time)
+    search_params = @current_search.except(:departure_time).compact
     return [] if search_params.empty?
 
+    logger.debug "Searching for flights with params: #{@current_search}"
     Flight.where(search_params)
       .order(:departure).includes(:arrival_airport, :departure_airport)
   end

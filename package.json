@@ -6,7 +6,6 @@
     "@hotwired/turbo-rails": "^7.2.0",
     "autoprefixer": "^10.4.12",
     "esbuild": "^0.15.9",
-    "flatpickr": "^4.6.13",
     "postcss": "^8.4.16",
     "postcss-cli": "^10.0.0",
     "postcss-nesting": "^10.2.0"
