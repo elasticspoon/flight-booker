@@ -12,7 +12,7 @@ class FlightsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def flight_params
-    params.permit(:arrival_airport, :departure_airport, departure: %i[day month year]).compact_blank
+    params.permit(:arrival_airport, :departure_airport, :num_passengers, departure: %i[day month year]).compact_blank
   end
 
   def set_current_search
@@ -24,7 +24,7 @@ class FlightsController < ApplicationController
   end
 
   def execute_search
-    search_params = @current_search.except(:departure_time).compact
+    search_params = @current_search.except(:departure_time, :num_passengers).compact
     return [] if search_params.empty?
 
     logger.debug "Searching for flights with params: #{@current_search}"

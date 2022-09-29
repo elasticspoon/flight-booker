@@ -191,6 +191,23 @@ RSpec.describe Flight, type: :model do
       end
     end
   end
+  describe '#pretty departure_full' do
+    let(:flight) { build_stubbed(:flight, departure: Date.civil(2000, 1, 1).to_datetime) }
+    it 'has the correct format' do
+      date = flight.pretty_departure_full
+      expect(date).to eq('Saturday 01, January 2000 at 12:00 AM')
+    end
+  end
+
+  describe '#pretty_arrival' do
+    let(:flight) do
+      build_stubbed(:flight, departure: Date.civil(2000, 1, 1).to_datetime, duration: 1.hour)
+    end
+    it 'has the correct format' do
+      date = flight.pretty_arrival
+      expect(date).to eq('Saturday 01, January 2000 at 01:00 AM')
+    end
+  end
 end
 
 # rubocop:enable Metrics/BlockLength

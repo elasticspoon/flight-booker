@@ -68,6 +68,14 @@ class Flight < ApplicationRecord
     #   v&.sort!
     # end
   end
+
+  def pretty_arrival
+    (departure + duration).strftime('%A %d, %B %Y at %I:%M %p')
+  end
+
+  def pretty_departure_full
+    departure.strftime('%A %d, %B %Y at %I:%M %p')
+  end
 end
 
 # rubocop:enable Layout/HashAlignment

@@ -1,18 +1,20 @@
-<div id="<%= dom_id flight %>">
-  <p>
-    <strong>Arrival airport:</strong>
-    <%= flight.arrival_airport.location %>
-  </p>
-  <p>
-    <strong>Departure airport:</strong>
+<turbo-frame class="flight" id="<%= dom_id flight %>" loading="lazy">
+  <div class="flight__airport">
+    <strong>Flying from:</strong>
     <%= flight.departure_airport.location %>
-  </p>
-  <p>
-    <strong>Departure:</strong>
-    <%= flight.pretty_departure %>
-  </p>
-  <p>
-    <strong>Duration:</strong>
-    <%= flight.pretty_duration %>
-  </p>
-</div>
+  </div>
+  <div class="flight__flight-duration">
+    <p><%= "Departing on #{flight.pretty_departure_full}" %></p>
+    <p><%= flight.pretty_duration %></p>
+    <p><%= "Landing on #{(flight.pretty_arrival)}" %></p>
+  </div>
+  <div class="flight__airport">
+    <strong>Flying to:</strong>
+    <%= flight.arrival_airport.location %>
+  </div>
+  <%= form_with url: new_booking_path,  method: 'get', data_turbo_method: :get do |form| %>
+    <%= form.hidden_field :id, value: flight.id %>
+    <%= form.hidden_field :num_passengers, value: passengers %>
+    <%= form.submit 'Select Flight' %>
+  <% end %>
+</turbo-frame>
