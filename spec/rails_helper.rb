@@ -10,6 +10,7 @@ require 'support/capybara'
 require 'support/shoulda_matchers'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'debug'
 # Capybara.server = :puma, { Silent: true }
 
 # Add additional requires below this line. Rails is not loaded until this point!
