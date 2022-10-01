@@ -27,7 +27,6 @@ class FlightsController < ApplicationController
     search_params = @current_search.except(:departure_time, :num_passengers).compact
     return [] if search_params.empty?
 
-    logger.debug "Searching for flights with params: #{@current_search}"
     Flight.where(search_params)
       .order(:departure).includes(:arrival_airport, :departure_airport)
   end
