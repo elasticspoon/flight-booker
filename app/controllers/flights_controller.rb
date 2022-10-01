@@ -30,16 +30,4 @@ class FlightsController < ApplicationController
     Flight.where(search_params)
       .order(:departure).includes(:arrival_airport, :departure_airport)
   end
-
-  def search_flights
-    @current_search = flight_params
-    return [] if @current_search.empty?
-
-    departure_time = @current_search[:departure]
-    @current_search[:departure_time] = departure_time
-    @current_search[:departure] = Flight.departure_range(departure_time) if departure_time
-
-    Flight.where(@current_search.except(:departure_time))
-      .order(:departure).includes(:arrival_airport, :departure_airport)
-  end
 end
