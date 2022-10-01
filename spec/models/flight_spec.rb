@@ -164,7 +164,7 @@ RSpec.describe Flight, type: :model do
         end
         it 'returns a range with end on next day' do
           date_range = Flight.parse_date_params(params)
-          expect(date_range.last).to eq(Time.zone.parse('02/01/2021'))
+          expect(date_range.last).to eq(Time.zone.parse('02/01/2021') - 0.1.seconds)
         end
       end
       context 'when params have y m' do
@@ -175,7 +175,7 @@ RSpec.describe Flight, type: :model do
         end
         it 'returns a range with end on next month' do
           date_range = Flight.parse_date_params(params)
-          expect(date_range.last).to eq(Time.zone.parse('01/02/2021'))
+          expect(date_range.last).to eq(Time.zone.parse('01/02/2021') - 0.1.seconds)
         end
       end
       context 'when params have y' do
@@ -186,7 +186,7 @@ RSpec.describe Flight, type: :model do
         end
         it 'returns a range with end on next year' do
           date_range = Flight.parse_date_params(params)
-          expect(date_range.last).to eq(Time.zone.parse('01/01/2022'))
+          expect(date_range.last).to eq(Time.zone.parse('01/01/2022') - 0.1.seconds)
         end
       end
     end

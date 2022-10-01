@@ -46,13 +46,13 @@ class Flight < ApplicationRecord
     case params.keys.sort
     when %w[day month year]
       date = Date.new(params['year'].to_i, params['month'].to_i, params['day'].to_i)
-      date..(date + 1.day)
+      date..(date + 1.day - 0.1.seconds)
     when %w[month year]
       date = Date.new(params['year'].to_i, params['month'].to_i)
-      date..(date + 1.month)
+      date..(date + 1.month - 0.1.seconds)
     when ['year']
       date = Date.new(params['year'].to_i)
-      date..(date + 1.year)
+      date..(date + 1.year - 0.1.seconds)
     end
   end
 

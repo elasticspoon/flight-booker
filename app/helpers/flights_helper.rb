@@ -12,9 +12,9 @@ module FlightsHelper
 
   def date_select_fields(**kwargs)
     content_tag :div, class: 'date-select' do
-      %i[year month day].sum do |type|
+      %i[year month day].map do |type|
         general_selector(type:, **kwargs)
-      end
+      end.join.html_safe # rubocop:disable Rails/OutputSafety
     end
   end
 end

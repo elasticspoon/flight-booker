@@ -15,7 +15,7 @@
     <%= form.fields_for :passengers do |passenger_form| %>
       <%= passenger_form.label :name, 'Name' %>
       <%= passenger_form.text_field :name %>
-      <%= passenger_form.label :name, 'Email' %>
+      <%= passenger_form.label :email, 'Email' %>
       <%= passenger_form.text_field :email %>
       <% unless booking.new_record? %>
         <%= passenger_form.label :name, 'Remove Passenger?' %>
