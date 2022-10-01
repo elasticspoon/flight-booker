@@ -1,10 +1,6 @@
 class BookingsController < ApplicationController
-  before_action :set_booking, only: %i[ show edit update destroy ]
-
-  # GET /bookings or /bookings.json
-  def index
-    @bookings = Booking.all
-  end
+  before_action :set_booking, only: %i[show edit update destroy]
+  before_action :build_booking, only: :new
 
   # GET /bookings/1 or /bookings/1.json
   def show
@@ -12,7 +8,6 @@ class BookingsController < ApplicationController
 
   # GET /bookings/new
   def new
-    @booking = Booking.new
   end
 
   # GET /bookings/1/edit
@@ -25,7 +20,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully created." }
+        format.html { redirect_to booking_url(@booking), notice: 'Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +33,7 @@ class BookingsController < ApplicationController
   def update
     respond_to do |format|
       if @booking.update(booking_params)
-        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully updated." }
+        format.html { redirect_to booking_url(@booking), notice: 'Booking was successfully updated.' }
         format.json { render :show, status: :ok, location: @booking }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +47,27 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to bookings_url, notice: "Booking was successfully destroyed." }
+      format.html { redirect_to root_path, notice: 'Booking was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_booking
-      @booking = Booking.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def booking_params
-      params.require(:booking).permit(:flight_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_booking
+    @booking = Booking.find(params[:id])
+  end
+
+  def build_booking
+    params = booking_params
+    booking = Booking.new(flight_id: params[:flight_id])
+    params[:num_passengers].to_i.times { booking.passengers.build }
+    @booking = booking
+  end
+
+  # Only allow a list of trusted parameters through.
+  def booking_params
+    params.require(:booking).permit(:flight_id, :num_passengers, :id, passengers_attributes: %i[id name email _destroy])
+  end
 end

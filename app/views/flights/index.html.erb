@@ -8,5 +8,12 @@
   <%= form.submit 'Search', id: 'flight-submit', readonly: true, placeholder: 'Select Date...' %>
 <% end %>
 <%= turbo_frame_tag 'flights-list' do %>
-  <%= render @flights, passengers: @current_search[:num_passengers] %>
+  <% @flights.each do |flight| %>
+    <%= render flight %>
+    <%= form_with url: new_booking_path, scope: :booking, method: 'get', data_turbo_method: :get do |form| %>
+      <%= form.hidden_field :flight_id, value: flight.id %>
+      <%= form.hidden_field :num_passengers, value: @current_search[:num_passengers] %>
+      <%= form.submit 'Select Flight' %>
+    <% end %>
+  <% end  %>
 <% end %>

@@ -1,7 +1,5 @@
 <div id="<%= dom_id booking %>">
-  <p>
-    <strong>Flight:</strong>
-    <%= booking.flight_id %>
-  </p>
-
+  <%= render booking.flight %>
+  <h2>Passengers:</h2>
+  <%= render booking.passengers %>
 </div>

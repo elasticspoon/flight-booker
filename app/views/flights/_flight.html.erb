@@ -12,9 +12,4 @@
     <strong>Flying to:</strong>
     <%= flight.arrival_airport.location %>
   </div>
-  <%= form_with url: new_booking_path,  method: 'get', data_turbo_method: :get do |form| %>
-    <%= form.hidden_field :id, value: flight.id %>
-    <%= form.hidden_field :num_passengers, value: passengers %>
-    <%= form.submit 'Select Flight' %>
-  <% end %>
 </turbo-frame>
