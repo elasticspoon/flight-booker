@@ -24,14 +24,4 @@
     <% end %>
     <%= form.submit %>
   <% end %>
-  <%= form_with model: booking, url: new_booking_path,  method: :get do |form| %>
-    <%= form.hidden_field :flight_id %>
-    <%= form.hidden_field :num_passengers, value: [booking.passengers.size + 1, 4].min %>
-    <%= form.submit 'add a passenger' %>
-  <% end %>
-  <%= form_with model: booking, url: new_booking_path,  method: :get do |form| %>
-    <%= form.hidden_field :flight_id %>
-    <%= form.hidden_field :num_passengers, value: [booking.passengers.size - 1, 1].max %>
-    <%= form.submit 'Remove a passenger' %>
-  <% end %>
 </div>

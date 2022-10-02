@@ -3,15 +3,24 @@ class Booking < ApplicationRecord
   has_many :passengers, dependent: :destroy, inverse_of: :booking
   accepts_nested_attributes_for :passengers, allow_destroy: true, limit: 4
 
-  validates :passengers, presence: true
-
   validate :passenger_count
+
+  before_validation :passenger_removal
+
+  validates_associated :passengers
 
   private
 
-  def passenger_count
-    return if passengers.size.between?(1, 4)
+  def custom_validations
+    passenger_count
+    passenger_removal
+  end
 
-    errors.add(:passengers, 'must be between 1 and 4')
+  def passenger_removal
+    errors.add(:base, 'Must have at least one passenger') if passengers.reject(&:marked_for_destruction?).empty?
+  end
+
+  def passenger_count
+    errors.add(:passengers, 'must be between 1 and 4') unless passengers.size.between?(1, 4)
   end
 end
