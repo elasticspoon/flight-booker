@@ -1,22 +1,35 @@
-<p style="color: green"><%= notice %></p>
-<h1>Flights</h1>
-<%= form_with url: flights_path, method: :get, data_turbo_method: :get, class: '' do |form| %>
-  <%= form.label :arrival_airport, 'Arrival Airport:' %>
-  <%= form.collection_select :arrival_airport, @airports, :code, :location, { selected: @current_search[:arrival_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
-  <%= form.label :departure_airport, 'Departure Airport:' %>
-  <%= form.collection_select :departure_airport, @airports, :code, :location, { selected: @current_search[:departure_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()" } %>
-  <%= form.label :num_passengers, 'Number of Passengers' %>
-  <%= form.select :num_passengers, options_for_select((1..4).to_a, selected: @current_search[:num_passengers]), { },  { onchange: "this.form.requestSubmit()" } %>
-  <%= date_select_fields(form:, array: @departures, field_name: 'departure', current_value: @current_search[:departure_time]) %>
-  <%= form.submit 'Search', id: 'flight-submit', readonly: true, placeholder: 'Select Date...' %>
-<% end %>
-<%= turbo_frame_tag 'flights-list' do %>
-  <% @flights.each do |flight| %>
-    <%= render flight %>
-    <%= form_with url: new_booking_path, scope: :booking, method: 'get', data_turbo_method: :get do |form| %>
-      <%= form.hidden_field :flight_id, value: flight.id %>
-      <%= form.hidden_field :num_passengers, value: @current_search[:num_passengers] %>
-      <%= form.submit 'Select Flight' %>
-    <% end %>
-  <% end  %>
-<% end %>
+<div class="">
+  <p style="color: green"><%= notice %></p>
+  <h1>Flights</h1>
+  <%= form_with url: flights_path, method: :get, data_turbo_method: :get, class: 'flight-index-form' do |form| %>
+    <div class="input">
+      <%= form.label :num_passengers, 'Passengers' %>
+      <%= form.select :num_passengers, options_for_select((1..4).to_a, selected: @current_search[:num_passengers]), { },  { onchange: "this.form.requestSubmit()", class: 'input__selector input__selector--small' } %>
+    </div>
+    <div class="input input--begins-row">
+      <%= form.label :arrival_airport, 'Arrival Airport:' %>
+      <%= form.collection_select :arrival_airport, @airports, :code, :location, { selected: @current_search[:arrival_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()", class: 'input__selector' } %>
+    </div>
+    <div class="input">
+      <%= form.label :departure_airport, 'Departure Airport:' %>
+      <%= form.collection_select :departure_airport, @airports, :code, :location, { selected: @current_search[:departure_airport], include_blank: 'None'}, { onchange: "this.form.requestSubmit()", class: 'input__selector' } %>
+    </div>
+    <div class="input input--width-two">
+      <span>Departure Date</span>
+      <div class="input__selector">
+        <%= date_select_fields(form:, array: @departures, field_name: 'departure', current_value: @current_search[:departure_time]) %>
+      </div>
+    </div>
+    <%= form.submit 'Search', id: 'flight-submit', class: 'input--ends-row' %>
+  <% end %>
+  <%= turbo_frame_tag 'flights-list' do %>
+    <% @flights.each do |flight| %>
+      <%= render flight %>
+      <%= form_with url: new_booking_path, scope: :booking, method: 'get', data_turbo_method: :get do |form| %>
+        <%= form.hidden_field :flight_id, value: flight.id %>
+        <%= form.hidden_field :num_passengers, value: @current_search[:num_passengers] %>
+        <%= form.submit 'Select Flight' %>
+      <% end %>
+    <% end  %>
+  <% end %>
+</div>

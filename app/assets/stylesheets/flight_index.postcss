@@ -1,0 +1,41 @@
+.flight-index {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flight-index-form {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 12px;
+  row-gap: 20px;
+}
+.input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.input__selector {
+  text-align: center;
+}
+.date-select {
+  display: flex;
+}
+.date-select > select {
+  flex-grow: 1;
+  text-align: center;
+}
+.input__selector--small {
+  width: fit-content;
+}
+.input--begins-row {
+  grid-column-start: 1;
+}
+.input--ends-row {
+  grid-column-end: 5;
+}
+.input--width-one {
+  grid-column-start: span 1;
+}
+.input--width-two {
+  grid-column-start: span 2;
+}

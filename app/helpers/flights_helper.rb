@@ -6,7 +6,7 @@ module FlightsHelper
                   array[type].uniq.sort || [],
                   selected: current_value && current_value[type]
                 ),
-                { include_blank: "Select a #{type}", selected: current_value[type] },
+                { include_blank: type.to_s.capitalize, selected: current_value[type] },
                 { onchange: 'this.form.requestSubmit()' }
   end
 
