@@ -11,11 +11,6 @@ class Booking < ApplicationRecord
 
   private
 
-  def custom_validations
-    passenger_count
-    passenger_removal
-  end
-
   def passenger_removal
     errors.add(:base, 'Must have at least one passenger') if passengers.reject(&:marked_for_destruction?).empty?
   end

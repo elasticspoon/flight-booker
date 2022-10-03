@@ -62,6 +62,14 @@ RSpec.describe 'Bookings', type: :system do
         expect(page.has_button?('Add a passenger')).to be false
       end
     end
+
+    context 'with bad inputs' do
+      let(:num_passengers) { 1 }
+      it 'shows errors' do
+        click_button 'Create Booking'
+        expect(page.has_content?('Error'))
+      end
+    end
   end
 
   describe 'edit booking' do
