@@ -195,7 +195,7 @@ RSpec.describe Flight, type: :model do
     let(:flight) { build_stubbed(:flight, departure: Date.civil(2000, 1, 1).to_datetime) }
     it 'has the correct format' do
       date = flight.pretty_departure_full
-      expect(date).to eq('Saturday 01, January 2000 at 12:00 AM')
+      expect(date).to eq('January 1, 2000 at 12:00 AM')
     end
   end
 
@@ -205,7 +205,7 @@ RSpec.describe Flight, type: :model do
     end
     it 'has the correct format' do
       date = flight.pretty_arrival
-      expect(date).to eq('Saturday 01, January 2000 at 01:00 AM')
+      expect(date).to eq('January 1, 2000 at 01:00 AM')
     end
   end
 end

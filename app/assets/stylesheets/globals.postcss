@@ -11,9 +11,21 @@ body :not(:is(h1, h2, h3, h4, h5, h6)) {
   line-height: 1.75;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   height: 100vh;
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.button {
+  padding: 0px 30px;
+  width: fit-content;
+}
+.button--left-aligned {
+  align-self: flex-end;
 }

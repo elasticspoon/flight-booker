@@ -70,11 +70,11 @@ class Flight < ApplicationRecord
   end
 
   def pretty_arrival
-    (departure + duration).strftime('%A %d, %B %Y at %I:%M %p')
+    (departure + duration).strftime('%B %-d, %Y at %I:%M %p')
   end
 
   def pretty_departure_full
-    departure.strftime('%A %d, %B %Y at %I:%M %p')
+    departure.strftime('%B %-d, %Y at %I:%M %p')
   end
 end
 

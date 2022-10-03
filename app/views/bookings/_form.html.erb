@@ -1,5 +1,5 @@
 <div class="booking-form">
-  <%= form_with(model: booking) do |form| %>
+  <%= form_with model: booking, id: 'booking-form' do |form| %>
     <%= form.hidden_field :flight_id %>
     <% if booking.errors.any? %>
       <div style="color: red">
@@ -11,17 +11,26 @@
         </ul>
       </div>
     <% end %>
-    <%= render 'flights/flight', flight: booking.flight %>
-    <%= form.fields_for :passengers do |passenger_form| %>
-      <%= passenger_form.label :name, 'Name' %>
-      <%= passenger_form.text_field :name %>
-      <%= passenger_form.label :email, 'Email' %>
-      <%= passenger_form.text_field :email %>
-      <% unless booking.new_record? %>
-        <%= passenger_form.label :name, 'Remove Passenger?' %>
-        <%= passenger_form.check_box :_destroy %>
+    <div class="booking__flight"><%= render 'flights/flight', flight: booking.flight %></div>
+    <div class="passengers-list">
+      <%= form.fields_for :passengers do |passenger_form| %>
+        <div class="passengers-list__entry">
+          <div class="passengers-list__input">
+            <%= passenger_form.label :name, 'Name' %>
+            <%= passenger_form.text_field :name %>
+          </div>
+          <div class="passengers-list__input">
+            <%= passenger_form.label :email, 'Email' %>
+            <%= passenger_form.text_field :email %>
+          </div>
+          <% unless booking.new_record? %>
+            <div class="passengers-list__input passengers-list__input--small-text">
+              <%= passenger_form.label :name, 'Remove?' %>
+              <%= passenger_form.check_box :_destroy %>
+            </div>
+          <% end %>
+        </div>
       <% end %>
-    <% end %>
-    <%= form.submit %>
+    </div>
   <% end %>
 </div>

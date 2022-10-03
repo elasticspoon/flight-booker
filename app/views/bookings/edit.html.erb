@@ -1,5 +1,6 @@
 <h1>Editing booking</h1>
 <%= render "form", booking: @booking %>
+<%= submit_tag 'Update Booking', form:'booking-form', class: 'button button--left-aligned' %>
 <br>
 <div>
   <%= link_to "Show this booking", @booking %> |

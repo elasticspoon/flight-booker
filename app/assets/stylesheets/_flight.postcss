@@ -1,15 +1,29 @@
 .flight {
-  display: flex;
-  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: center;
   column-gap: 20px;
+  width: 100%;
+}
+.flight__time {
+  font-size: 14px;
+}
+.flight__arrow {
+  width: 50px;
+  height: 24px;
 }
 .flight__airport {
   display: flex;
   flex-direction: column;
+  grid-column-end: span 2;
+  border: 1px gray;
+}
+.flight__airport--align-right {
+  text-align: right;
 }
 .flight__flight-duration {
   display: flex;
   flex-direction: column;
   text-align: center;
+  font-size: 14px;
 }

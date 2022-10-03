@@ -1,4 +1,8 @@
 /* Entry point for your PostCSS build */
-@import "globals.postcss";
+/* @import "normalize.css"; */
+@import "passenger.postcss";
+@import "booking_new.postcss";
 @import "_flight.postcss";
 @import "flight_index.postcss";
+@import "globals.postcss";
+@import-normalize;

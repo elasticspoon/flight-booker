@@ -1,15 +1,16 @@
 <turbo-frame class="flight" id="<%= dom_id flight %>" loading="lazy">
   <div class="flight__airport">
     <strong>Flying from:</strong>
-    <%= flight.departure_airport.location %>
+    <p><%= flight.departure_airport.location %></p>
+    <p class="flight__time"><%= "Departing on #{flight.pretty_departure_full}" %></p>
   </div>
   <div class="flight__flight-duration">
-    <p><%= "Departing on #{flight.pretty_departure_full}" %></p>
+    <div><%= inline_svg_tag 'right-arrow-alt.svg', class: 'flight__arrow' %></div>
     <p><%= flight.pretty_duration %></p>
-    <p><%= "Landing on #{(flight.pretty_arrival)}" %></p>
   </div>
-  <div class="flight__airport">
+  <div class="flight__airport flight__airport--align-right">
     <strong>Flying to:</strong>
-    <%= flight.arrival_airport.location %>
+    <p><%= flight.arrival_airport.location %></p>
+    <p class="flight__time"><%= "Arriving on #{flight.pretty_arrival}" %></p>
   </div>
 </turbo-frame>

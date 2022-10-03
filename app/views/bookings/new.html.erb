@@ -1,20 +1,22 @@
 <h1>New booking</h1>
 <%= render "form", booking: @booking %>
-<% if @booking.passengers.size < 4 %>
-  <%= form_with model: @booking, url: new_booking_path,  method: :get do |form| %>
-    <%= form.hidden_field :flight_id %>
-    <%= form.hidden_field :num_passengers, value: @booking.passengers.size + 1 %>
-    <%= form.submit 'Add a passenger' %>
+<div class="booking-new__passenger_buttons">
+  <% if @booking.passengers.size < 4 %>
+    <%= form_with model: @booking, url: new_booking_path,  method: :get do |form| %>
+      <%= form.hidden_field :flight_id %>
+      <%= form.hidden_field :num_passengers, value: @booking.passengers.size + 1 %>
+      <%= form.submit 'Add a passenger', class: 'button' %>
+    <% end %>
   <% end %>
-<% end %>
-<% if @booking.passengers.size > 1 %>
-  <%= form_with model: @booking, url: new_booking_path,  method: :get do |form| %>
-    <%= form.hidden_field :flight_id %>
-    <%= form.hidden_field :num_passengers, value: @booking.passengers.size - 1 %>
-    <%= form.submit 'Remove a passenger' %>
+  <% if @booking.passengers.size > 1 %>
+    <%= form_with model: @booking, url: new_booking_path,  method: :get do |form| %>
+      <%= form.hidden_field :flight_id %>
+      <%= form.hidden_field :num_passengers, value: @booking.passengers.size - 1 %>
+      <%= form.submit 'Remove a passenger', class: 'button' %>
+    <% end %>
   <% end %>
-<% end %>
-<br>
+</div>
+<%= submit_tag 'Create Booking', form:'booking-form', class: 'button button--left-aligned' %>
 <div>
   <%= link_to "Back to flights", flights_path %>
 </div>
