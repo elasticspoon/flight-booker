@@ -30,8 +30,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 .env
-.ruby-version
-/config/database.yml
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
@@ -39,3 +37,4 @@
 /node_modules
 /.vscode
 /coverage
+*.env
