@@ -64,7 +64,6 @@ group :development do
   # gem "spring"
 end
 
-gem 'flatpickr'
 gem 'inline_svg'
 
 group :development do
