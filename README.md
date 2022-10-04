@@ -1,6 +1,6 @@
-# Flight booker README
+# [Odin Flight Booker](https://web-production-9a89.up.railway.app)
 
-- [Flight booker README](#flight-booker-readme)
+- [Odin Flight Booker](#odin-flight-booker)
   - [Goals](#goals)
   - [Tech stack](#tech-stack)
   - [Getting the site running for development](#getting-the-site-running-for-development)
