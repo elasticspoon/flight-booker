@@ -1,0 +1,18 @@
+<h1>Passengers#new_passenger</h1>
+<p>
+  <%= @passenger.name %>, find me in app/views/passengers_mailer/new_passenger.html.erb
+</p>
+<div>
+  <div class="booking__flight">
+    <div class="flight__airport">
+      <strong>Flying from:</strong>
+      <p><%= @flight.departure_airport.location %></p>
+      <p class="flight__time"><%= "Departing on #{@flight.pretty_departure_full}" %></p>
+    </div>
+    <div class="flight__airport flight__airport--align-right">
+      <strong>Flying to:</strong>
+      <p><%= @flight.arrival_airport.location %></p>
+      <p class="flight__time"><%= "Arriving on #{@flight.pretty_arrival}" %></p>
+    </div>
+  </div>
+</div>

@@ -73,6 +73,7 @@ group :development do
   gem 'guard'
   gem 'guard-livereload'
   gem 'guard-rspec', require: false
+  gem 'letter_opener'
   gem 'rack-livereload'
 end
 

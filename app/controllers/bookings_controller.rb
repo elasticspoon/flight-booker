@@ -1,6 +1,7 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: %i[show edit update destroy]
   before_action :build_booking, only: :new
+  after_action :mail_new_passengers, only: :create
 
   # GET /bookings/1 or /bookings/1.json
   def show
@@ -69,5 +70,13 @@ class BookingsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def booking_params
     params.require(:booking).permit(:flight_id, :num_passengers, :id, passengers_attributes: %i[id name email _destroy])
+  end
+
+  def mail_new_passengers
+    booking = @booking
+    flight = booking.flight
+    booking.passengers.each do |passenger|
+      PassengersMailer.with(passenger:, flight:).new_passenger.deliver_later
+    end
   end
 end
