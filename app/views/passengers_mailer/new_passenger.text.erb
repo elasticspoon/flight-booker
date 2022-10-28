@@ -1,2 +1,16 @@
-Passengers#new_passenger
-<%= @passenger.name %>, find me in app/views/passengers_mailer/new_passenger.text.erb
+Hello <%= @passenger.name %>,
+Thank you for choosing to fly with Odin Airlines!
+You have a booked a ticket for flight <%= @flight.id %>:
+
+
+######################################################################
+Your flight is departing from: <%= @flight.departure_airport.location %>
+<%= "on #{@flight.pretty_departure_full}" %>
+
+The total duration of your flight is <%= @flight.pretty_duration %>
+
+You wil arrive in <%= @flight.arrival_airport.location %>
+<%= "on #{@flight.pretty_arrival}" %>
+
+
+If you have any issues you may acess your ticket at <%=  booking_url(@passenger.booking) %>
