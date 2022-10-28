@@ -11,6 +11,6 @@ class PassengersMailer < ApplicationMailer
 
     return unless @passenger
 
-    mail to: 'to@example.org'
+    mail to: @passenger.email
   end
 end
