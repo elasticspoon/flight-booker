@@ -64,6 +64,7 @@ group :development do
   # gem "spring"
 end
 
+gem 'figaro'
 gem 'inline_svg'
 
 group :development do
