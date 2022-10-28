@@ -1,12 +1,18 @@
 # [Odin Flight Booker](https://web-production-9a89.up.railway.app)
 
 - [Odin Flight Booker](#odin-flight-booker)
+  - [Changelog](#changelog)
   - [Goals](#goals)
   - [Tech stack](#tech-stack)
   - [Getting the site running for development](#getting-the-site-running-for-development)
+    - [Making mailers work](#making-mailers-work)
   - [Custom settings for development](#custom-settings-for-development)
   - [Launching in production](#launching-in-production)
   - [Site overview](#site-overview)
+
+## Changelog
+
+- 10/27/22: added mailers, configuration info [[#Making mailers work|here]]
 
 ## Goals
 
@@ -48,6 +54,37 @@ Seed the database and run the application:
 rails db:seed
 bin/dev
 ```
+
+### Making mailers work
+
+An update to the site added mailers that will send emails to all passengers making a booking. This functionality is not set up to work in production, it also currently defaults to using the letter opener gem in development.
+
+`development.rb` contains the following code, with the active section being settings to prevent mail from being sent and instead open it with the letter opener gem.
+
+```ruby
+#config/environments/development.rb
+config.action_mailer.delivery_method = :letter_opener
+config.action_mailer.perform_deliveries = true
+config.action_mailer.default_url_options = { host: 'localhost:3000' }
+```
+
+If needed those settings can be replaced with the following ones to use Gmail as a mailer instead. You will need to provide your Gmail username and password as environment variables to make the mailer work.
+
+```ruby
+#config/environments/development.rb
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.default_url_options = { host: 'localhost:3000', protocol: 'http' }
+config.action_mailer.smtp_settings = {
+  address:              'smtp.gmail.com',
+  port:                 587,
+  user_name:            ENV.fetch('gmail_username', nil),
+  password:             ENV.fetch('gmail_password', nil),
+  authentication:       'plain',
+  enable_starttls_auto: true
+}
+```
+
+Note: If your Gmail uses two factor authentication you will need to create an app password using [these steps](https://support.google.com/accounts/answer/185833?hl=en).
 
 ## Custom settings for development
 
