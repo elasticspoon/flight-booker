@@ -43,9 +43,8 @@ module OdinFlightBooker
         controller_specs: false
     end
 
-    config.action_mailer.preview_path = "#{Rails.root}/app/mailers/previews"
+    # config.action_mailer.preview_path = "#{Rails.root}/app/mailers/previews"
     # config.action_mailer.preview_path = Rails.root.join('/app/mailers/previews')
-    # config.eager_load_paths << Rails.root.join("app/mailers/previews")
-    config.eager_load_paths << "/home/bandito/Projects/flight-booker/app/mailers/previews"
+    config.eager_load_paths << Rails.root.join("app/mailers/previews")
   end
 end

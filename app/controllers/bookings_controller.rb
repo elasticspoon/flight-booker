@@ -1,7 +1,7 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: %i[show edit update destroy]
   before_action :build_booking, only: :new
-  after_action :mail_new_passengers, only: :create
+  # after_action :mail_new_passengers, only: :create
 
   # GET /bookings/1 or /bookings/1.json
   def show
@@ -21,7 +21,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to booking_url(@booking), notice: 'Booking was successfully created.' }
+        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully created." }
         format.json { render :show, status: :created, location: @booking }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -34,7 +34,7 @@ class BookingsController < ApplicationController
   def update
     respond_to do |format|
       if @booking.update(booking_params)
-        format.html { redirect_to booking_url(@booking), notice: 'Booking was successfully updated.' }
+        format.html { redirect_to booking_url(@booking), notice: "Booking was successfully updated." }
         format.json { render :show, status: :ok, location: @booking }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -48,7 +48,7 @@ class BookingsController < ApplicationController
     @booking.destroy
 
     respond_to do |format|
-      format.html { redirect_to flights_path, notice: 'Booking was successfully destroyed.' }
+      format.html { redirect_to flights_path, notice: "Booking was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -72,11 +72,11 @@ class BookingsController < ApplicationController
     params.require(:booking).permit(:flight_id, :num_passengers, :id, passengers_attributes: %i[id name email _destroy])
   end
 
-  def mail_new_passengers
-    booking = @booking
-    flight = booking.flight
-    booking.passengers.each do |passenger|
-      PassengersMailer.with(passenger:, flight:).new_passenger.deliver_later
-    end
-  end
+  # def mail_new_passengers
+  #   booking = @booking
+  #   flight = booking.flight
+  #   booking.passengers.each do |passenger|
+  #     PassengersMailer.with(passenger:, flight:).new_passenger.deliver_later
+  #   end
+  # end
 end
