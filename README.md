@@ -1,4 +1,4 @@
-# [Odin Flight Booker](https://web-production-9a89.up.railway.app)
+# [Odin Flight Booker (link)](https://flight-booker-gogr.onrender.com/)
 
 - [Odin Flight Booker](#odin-flight-booker)
   - [Changelog](#changelog)
@@ -13,6 +13,7 @@
 ## Changelog
 
 - 10/27/22: added mailers, configuration info [[#Making mailers work|here]]
+- 08/18/23: Move site to render off railway, removed mailers from production to make render happy 
 
 ## Goals
 
